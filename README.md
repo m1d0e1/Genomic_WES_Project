@@ -4,7 +4,7 @@ This repository contains a pipeline for processing whole-exome sequencing (WES) 
 
 ## Overview
 
-The pipeline consists of 12 steps, implemented as Bash scripts, to process WES data for a trio where the proband is affected by osteopetrosis, and the consanguineous parents are unaffected. The goal is to identify rare, high-impact variants in known osteopetrosis genes (e.g., `TCIRG1`, `CLCN7`, `OSTM1`, `TNFSF11`, `SNX10`).
+The pipeline consists of 12 steps, implemented as Bash scripts, to process WES data for a trio where the proband is affected by osteopetrosis, and the consanguineous parents are unaffected. The goal is to identify rare, high-impact variants in known osteopetrosis genes.
 
 ## Prerequisites
 
@@ -40,7 +40,17 @@ The pipeline consists of 12 steps, implemented as Bash scripts, to process WES d
 
 The pipeline processes FASTQ files through alignment, variant calling, annotation, and variant filtering. Each step is implemented as a Bash script, with the first step (quality control) performed manually or scripted separately.
 
-### Step 1: Quality Control
+### Step 1: Download Data (`1_data.sh`)
+
+- **Description**: Downloads raw FASTQ files from Zenodo.
+- **Command**:
+
+  ```bash
+  ./1_data.sh
+  ```
+- **Output**: `father_R1.fq.gz`, `father_R2.fq.gz`, `mother_R1.fq.gz`, `mother_R2.fq.gz`, `proband_R1.fq.gz`, `proband_R2.fq.gz`
+
+### Step 2: Quality Control
 
 - **Tools**: FastQC, MultiQC
 - **Description**: Assess raw FASTQ file quality for the trio (`father_R1.fq.gz`, `father_R2.fq.gz`, `mother_R1.fq.gz`, `mother_R2.fq.gz`, `proband_R1.fq.gz`, `proband_R2.fq.gz`).
@@ -52,17 +62,7 @@ The pipeline processes FASTQ files through alignment, variant calling, annotatio
   multiqc fastqc_results -o multiqc_report
   ```
 - **Output**: `fastqc_results/*.html`, `multiqc_report/multiqc_report.html`
-
-### Step 2: Download Data (`1_data.sh`)
-
-- **Description**: Downloads raw FASTQ files from Zenodo.
-- **Command**:
-
-  ```bash
-  ./1_data.sh
-  ```
-- **Output**: `father_R1.fq.gz`, `father_R2.fq.gz`, `mother_R1.fq.gz`, `mother_R2.fq.gz`, `proband_R1.fq.gz`, `proband_R2.fq.gz`
-
+- 
 ### Step 3: Trim Reads (`2_trim.sh`)
 
 - **Tool**: Trimmomatic
@@ -250,15 +250,3 @@ wes_pipeline/
 - **Troubleshooting**:
   - Check sample order in VCF headers for `12_find.sh` (`bcftools view -h trio_annotated_vep.vcf.gz | grep "^#CHROM"`).
   - If no candidates are found, relax filters in `12_find.sh` (e.g., remove gene restrictions).
-- **Improvements**:
-  - Add error handling for missing files.
-  - Incorporate FastQC/MultiQC into a script.
-  - Update `12_find.sh` to use `MAX_AF` from VEP annotations (currently uses unavailable `max_aaf_all`).
-
-## License
-
-MIT License. See `LICENSE` for details.
-
-## Contact
-
-For issues or questions, open a GitHub issue or contact the repository maintainer.
