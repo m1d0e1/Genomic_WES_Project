@@ -13,7 +13,7 @@ The pipeline consists of 12 steps, implemented as Bash scripts, to process WES d
 - **Docker**: For running GATK tools
 - **Reference Files**:
   - Human genome: `hg19.fa` (adjust path in scripts)
-  - VEP cache: GRCh37 (`/media/m0hamed/files/files/bioinformatics/wes/ref/vep_cache`)
+  - VEP cache: GRCh37 (`....../wes/ref/vep_cache`)
 - **Tools** (installed via Conda or Docker):
   - FastQC
   - MultiQC
@@ -232,7 +232,7 @@ wes_pipeline/
    conda env create -n wes_analysis -c bioconda fastqc multiqc trimmomatic bwa samtools picard vep bcftools
    conda env create -n vcf2db_env python=3.8 gemini vcf2db
    ```
-3. Ensure `hg19.fa` and VEP cache are in `/media/m0hamed/files/files/bioinformatics/wes/ref/`.
+3. Ensure `hg19.fa` and VEP cache are in `...../wes/ref/`.
 4. Run scripts sequentially:
 
    ```bash
@@ -246,7 +246,7 @@ wes_pipeline/
 
 - **Sample Names**: Hardcoded as `father`, `mother`, `proband`. Adjust in scripts if different.
 - **Reference Genome**: Uses `hg19.fa`. Update paths in scripts for your setup.
-- **VEP Cache**: Assumes GRCh37 cache at `/media/m0hamed/files/files/bioinformatics/wes/ref/vep_cache`.
+- **VEP Cache**: Assumes GRCh37 cache at `......./wes/ref/vep_cache`.
 - **Troubleshooting**:
   - Check sample order in VCF headers for `12_find.sh` (`bcftools view -h trio_annotated_vep.vcf.gz | grep "^#CHROM"`).
   - If no candidates are found, relax filters in `12_find.sh` (e.g., remove gene restrictions).
