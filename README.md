@@ -48,6 +48,9 @@ The pipeline processes FASTQ files through alignment, variant calling, annotatio
   ```bash
   ./1_data.sh
   ```
+  ```code
+  jgeuhg;uswu;yd;use
+  ```
 - **Output**: `father_R1.fq.gz`, `father_R2.fq.gz`, `mother_R1.fq.gz`, `mother_R2.fq.gz`, `proband_R1.fq.gz`, `proband_R2.fq.gz`
 
 ### Step 2: Quality Control
